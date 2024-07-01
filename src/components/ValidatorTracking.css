@@ -1,0 +1,85 @@
+/* src/components/ValidatorTracking.css */
+.validator-tracking {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .validator-tracking h2 {
+    color: #333;
+  }
+  
+  .validator-tracking form {
+    margin-bottom: 20px;
+  }
+  
+  .validator-tracking label {
+    margin-right: 10px;
+  }
+  
+  .validator-tracking input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .validator-tracking button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .validator-tracking button:hover {
+    background-color: #0056b3;
+  }
+  
+  .validator-tracking .validator-info {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .validator-tracking .error {
+    color: red;
+    margin-top: 20px;
+  }
+  
+  .validator-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .validator-info table, .validator-info th, .validator-info td {
+    border: 1px solid #ddd;
+  }
+  
+  .validator-info th, .validator-info td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .validator-info th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .validator-info tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .validator-info tr:hover {
+    background-color: #ddd;
+  }
+  
+  
+
+    
+  

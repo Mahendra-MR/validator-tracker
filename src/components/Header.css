@@ -1,0 +1,57 @@
+/* src/components/Header.css */
+.header {
+    background-color: #282c34;
+    color: white;
+    padding: 20px 0; /* Adjusted padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px; /* Increased maximum width for the header */
+    margin: 15px; /* Center the header horizontally */
+  }
+  
+  .header-left {
+    flex: 0 0 auto; /* Fixed size for the logo */
+  }
+  
+  .header-logo {
+    height: 55px; /* Adjusted logo size */
+  }
+  
+  .header-center {
+    text-align: center; /* Center align the title */
+    flex:1; /* Take remaining space */
+  }
+  
+  .header-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #66bb6a; /* Adjusted color */
+     ;
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      padding: 15px 0; /* Adjust padding for smaller screens */
+    }
+  
+    .header-logo {
+      height: 40px; /* Adjust logo size for smaller screens */
+    }
+  
+    .header-title {
+      font-size: 20px; /* Adjust title font size for smaller screens */
+    }
+  }
+  
+  
+  
+  
+  
+  
+  

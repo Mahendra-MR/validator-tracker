@@ -1,0 +1,45 @@
+/* src/components/TopValidators.css */
+.top-validators {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .top-validators h2 {
+    color: #333;
+  }
+  
+  .top-validators table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .top-validators th, .top-validators td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .top-validators th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .top-validators tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .top-validators tr:hover {
+    background-color: #ddd;
+  }
+  
+  .top-validators .error {
+    color: red;
+    margin-top: 20px;
+  }
+  

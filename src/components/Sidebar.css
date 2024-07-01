@@ -1,0 +1,63 @@
+/* src/components/Sidebar.css */
+
+
+  .sidebar {
+    width: 200px; /* Reduced width */
+    background-color: #f9f9f9; /* Light white background */
+    color: #333; /* Dark text for contrast */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fixed position for better accessibility */
+    top: 145px; /* Adjust this value to match the height of your fixed header */
+    bottom: 0; /* Stick to the bottom of the viewport */
+    left: 0; /* Align to the left side */
+    overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
+  }
+  
+  .sidebar-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-link {
+    display: block;
+    padding: 15px 20px;
+    color: #333; /* Dark text for better readability */
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar-link:hover {
+    background-color: #66bb6a; /* Hover effect with green color */
+  }
+  
+  .sidebar-link:active {
+    background-color: #4caf50; /* Active state color */
+  }
+  
+  .sidebar-link:focus {
+    outline: 2px solid #66bb6a; /* Focus state for accessibility */
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 150px; /* Adjust width for smaller screens */
+    }
+  
+    .sidebar-link {
+      font-size: 16px; /* Adjust font size for smaller screens */
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
