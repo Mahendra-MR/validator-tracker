@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React from 'react';
-import logo from 'C:/Users/Mahendra MR/validator-tracker/src/components/assests/Foundry-horz-inverse-e1701188519620.png'; // Adjust path as necessary
+import logo from './assests/Foundry-horz-inverse-e1701188519620.png'; // Adjust path as necessary
 import './Header.css';
 
 const Header = () => {
