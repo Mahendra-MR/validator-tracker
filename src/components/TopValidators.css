@@ -42,4 +42,29 @@
     color: red;
     margin-top: 20px;
   }
+  .top-validators .custom-button {
+    display: inline-block;
+    padding: 8px 20px;
+    background-image: url('https://pic.onlinewebfonts.com/thumbnails/icons_554814.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-indent: -9999px; /* Hide text */
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
   
+  .top-validators .custom-button:hover {
+    opacity: 0.8;
+  }
+  .top-validators .custom-button img {
+    vertical-align: middle;
+    margin-right: 5px;
+  }

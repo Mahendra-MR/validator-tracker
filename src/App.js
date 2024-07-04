@@ -34,6 +34,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/track-validator" element={<ValidatorTracking />} />
+              <Route path="/track-validator/:validatorIndex" element={<ValidatorTracking />} />
               <Route path="/top-validators" element={<TopValidators />} />
               <Route path="/about" element={<About />} />
             </Routes>
