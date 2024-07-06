@@ -5,7 +5,7 @@
   min-height: 100vh;
   background-color: #f5f5f5;
   color: #333;
-  font-family: Arial, sans-serif;
+  font-family: Foundry,Arial, sans-serif;
 }
 
 .main-content {
@@ -24,8 +24,8 @@ aside {
 
 main {
   flex: 1;
-  padding: 20px;
-  margin-left: 280px; /* Adjust for the sidebar width */
+  padding: 160px;
+  margin-left: 200px; /* Adjust for the sidebar width */
 }
 
 a {

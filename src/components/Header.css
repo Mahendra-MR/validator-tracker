@@ -5,6 +5,8 @@
     padding: 20px 0; /* Adjusted padding */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
+    position: fixed;
+
   }
   
   .header-container {
@@ -47,11 +49,4 @@
     .header-title {
       font-size: 20px; /* Adjust title font size for smaller screens */
     }
-  }
-  
-  
-  
-  
-  
-  
-  
+  } 

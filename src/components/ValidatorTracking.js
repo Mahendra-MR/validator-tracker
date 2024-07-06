@@ -8,25 +8,22 @@ const ValidatorTracking = () => {
   const [validatorIndex, setValidatorIndex] = useState(paramValidatorIndex || '');
   const [validatorData, setValidatorData] = useState(null);
   const [attestationsData, setAttestationsData] = useState([]);
-  const [additionalDetails, setAdditionalDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showAttestations, setShowAttestations] = useState(false); // State to manage showing attestations
+  const [attestationsError, setAttestationsError] = useState(null);
+  const [showAttestations, setShowAttestations] = useState(false);
 
-  const fetchAdditionalDetails = useCallback(async (index) => {
-    try {
-      const response = await axios.get(`https://additional-api.com/details/${index}`);
-      if (response.status === 200 && response.data) {
-        return response.data;
-      } else {
-        console.error('Additional details data not found or not in the expected format.');
-        return null;
-      }
-    } catch (err) {
-      console.error('Error fetching additional details:', err);
-      return null;
-    }
-  }, []);
+  // Define formatAttestationData function before its usage in useCallback and other places
+  const formatAttestationData = useCallback((attestation) => ({
+    epoch: attestation.epoch,
+    slot: attestation.attesterslot,
+    committeeIndex: attestation.committeeindex !== undefined ? attestation.committeeindex : 'N/A',
+    inclusionslot: attestation.inclusionslot || 'N/A',
+    status: attestation.status || 'N/A',
+    week: attestation.week || 'N/A',
+    week_start: attestation.week_start || 'N/A',
+    week_end: attestation.week_end || 'N/A',
+  }), []);
 
   const fetchValidatorData = useCallback(async (index) => {
     setLoading(true);
@@ -35,7 +32,6 @@ const ValidatorTracking = () => {
     try {
       const validatorResponse = await axios.get(`https://beaconcha.in/api/v1/validator/${index}`);
       const attestationsResponse = await axios.get(`https://beaconcha.in/api/v1/validator/${index}/attestations`);
-      const additionalDetailsResponse = await fetchAdditionalDetails(index);
 
       if (validatorResponse.status === 200 && validatorResponse.data && validatorResponse.data.data) {
         setValidatorData(validatorResponse.data.data);
@@ -46,20 +42,18 @@ const ValidatorTracking = () => {
       if (attestationsResponse.status === 200 && attestationsResponse.data && attestationsResponse.data.data) {
         const formattedAttestations = attestationsResponse.data.data.map(formatAttestationData);
         setAttestationsData(formattedAttestations);
+        setAttestationsError(null); // Clear previous attestation error if data is available
       } else {
-        setError('Attestations data not found or not in the expected format.');
-      }
-
-      if (additionalDetailsResponse) {
-        setAdditionalDetails(additionalDetailsResponse);
+        setAttestationsData([]); // Reset attestations data to empty array
+        setAttestationsError('No attestations found for this validator.'); // Set error message
       }
     } catch (err) {
-      console.error('Error fetching data:', err); // Log the error for debugging
+      console.error('Error fetching data:', err);
       setError('Failed to fetch data. Please try again later.');
     } finally {
       setLoading(false);
     }
-  }, [fetchAdditionalDetails]);
+  }, [formatAttestationData]); // Include formatAttestationData in dependencies
 
   useEffect(() => {
     if (paramValidatorIndex) {
@@ -80,18 +74,12 @@ const ValidatorTracking = () => {
     }
   };
 
-  const formatAttestationData = (attestation) => ({
-    epoch: attestation.epoch,
-    slot: attestation.attesterslot,
-    committeeIndex: attestation.committeeindex !== undefined ? attestation.committeeindex : 'N/A',
-    sourceEpoch: attestation.source && attestation.source.epoch ? attestation.source.epoch : 'N/A',
-    targetEpoch: attestation.target && attestation.target.epoch ? attestation.target.epoch : 'N/A',
-    inclusionDelay: attestation.inclusiondelay !== undefined ? attestation.inclusiondelay : 'N/A',
-    aggregationBits: attestation.aggregationbits !== undefined ? attestation.aggregationbits : 'N/A',
-  });
-
   const toggleAttestations = () => {
     setShowAttestations(!showAttestations);
+    // Clear attestation error message when hiding attestations
+    if (!showAttestations) {
+      setAttestationsError(null);
+    }
   };
 
   const renderRows = (data) => {
@@ -158,7 +146,7 @@ const ValidatorTracking = () => {
       <h2>Ethereum Validator Tracking</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Validator Index:
+          Validator Index: 
           <input type="text" value={validatorIndex} onChange={handleInputChange} />
         </label>
         <button type="submit">Track Validator</button>
@@ -182,9 +170,9 @@ const ValidatorTracking = () => {
           <button className="attestations-button" onClick={toggleAttestations}>
             {showAttestations ? 'Hide Attestations' : 'Show Attestations'}
           </button>
-          {showAttestations && (
+          {attestationsError && <div className="error">{attestationsError}</div>}
+          {showAttestations && !attestationsError && (
             <>
-              <h3>Attestations</h3>
               <div className="attestations-table-wrapper">
                 <table>
                   <thead>
@@ -193,10 +181,11 @@ const ValidatorTracking = () => {
                       <th>Epoch</th>
                       <th>Slot</th>
                       <th>Committee Index</th>
-                      <th>Source Epoch</th>
-                      <th>Target Epoch</th>
-                      <th>Inclusion Delay</th>
-                      <th>Aggregation Bits</th>
+                      <th>Inclusion Slot</th>
+                      <th>Status</th>
+                      <th>Week</th>
+                      <th>Week Start</th>
+                      <th>Week End</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -206,10 +195,11 @@ const ValidatorTracking = () => {
                         <td>{attestation.epoch || 'N/A'}</td>
                         <td>{attestation.slot || 'N/A'}</td>
                         <td>{attestation.committeeIndex}</td>
-                        <td>{attestation.sourceEpoch}</td>
-                        <td>{attestation.targetEpoch}</td>
-                        <td>{attestation.inclusionDelay}</td>
-                        <td>{attestation.aggregationBits}</td>
+                        <td>{attestation.inclusionslot}</td>
+                        <td>{attestation.status}</td>
+                        <td>{attestation.week}</td>
+                        <td>{attestation.week_start}</td>
+                        <td>{attestation.week_end}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -219,24 +209,8 @@ const ValidatorTracking = () => {
           )}
         </div>
       )}
-
-      {additionalDetails && (
-        <div className="additional-details">
-          <h3>Additional Details</h3>
-          <pre>{JSON.stringify(additionalDetails, null, 2)}</pre>
-        </div>
-      )}
-
     </div>
   );
 };
 
 export default ValidatorTracking;
-
-
-
-
-
-
-
-

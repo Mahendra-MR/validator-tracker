@@ -1,141 +1,142 @@
 .validator-tracking {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 1030px;
-  margin: 20px auto; /* Added margin to center align and separate from other elements */
-  text-align: center;
-}
-
-.validator-tracking h2 {
-  color: #333;
-}
-
-.validator-tracking form {
-  margin-bottom: 20px;
-}
-
-.validator-tracking label {
-  margin-right: 10px;
-}
-
-.validator-tracking input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.validator-tracking button {
-  background-color: #0056b3; /* Changed button color to green */
-  color: white;
-  border: none;
-  padding: 9px 18px; /* Increased padding for a larger clickable area */
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: -10px; /* Added margin to separate from input */
-}
-
-.validator-tracking button:hover {
-  background-color: #02448a; /* Darker green on hover */
-}
-
-.validator-tracking .validator-info {
-  margin-top: 20px;
-  overflow-x: auto;
-}
-
-.validator-tracking .error {
-  color: red;
-  margin-top: 20px;
-}
-
-.validator-info table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.validator-info table,
-.validator-info th,
-.validator-info td {
-  border: 1px solid #ddd;
-}
-
-.validator-info th,
-.validator-info td {
-  padding: 12px;
-  text-align: left;
-}
-
-.validator-info th {
-  background-color: #4caf50;
-  color: white;
-}
-
-.validator-info tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.validator-info tr:hover {
-  background-color: #ddd;
-}
-
-/* Styling for the attestations section */
-.attestations {
-  margin-top: 20px;
-  overflow-x: auto;
-}
-
-.attestations h3 {
-  margin-top: 10px;
-  margin-bottom: 5px;
-}
-
-.attestations table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.attestations th,
-.attestations td {
-  border: 1px solid #ddd;
-  padding: 10px; /* Adjusted padding for better readability */
-  text-align: left;
-}
-
-.attestations th {
-  background-color: #4caf50;
-  color: white;
-}
-
-.attestations tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.attestations tr:hover {
-  background-color: #ddd;
-  cursor: pointer;
-}
-
-.attestations .attestations-table-wrapper {
-  max-height: 400px; /* Example height; adjust as needed */
-  overflow-y: auto;
-}
-
-.attestations-button {
-  background-color: #007bff; /* Blue color for button */
-  color: white;
-  border: none;
-  padding: 8px 16px; /* Adjusted padding for button */
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 20px; /* Added margin to separate from the table */
-}
-
-.attestations-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1030px;
+    margin: 20px auto; /* Added margin to center align and separate from other elements */
+    text-align: center;
+  }
+  
+  .validator-tracking h2 {
+    color: #333;
+  }
+  
+  .validator-tracking form {
+    margin-bottom: 20px;
+  }
+  
+  .validator-tracking label {
+    margin-right: 10px;
+  }
+  
+  .validator-tracking input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .validator-tracking button {
+    background-color: #0056b3; /* Changed button color to green */
+    color: white;
+    border: none;
+    padding: 9px 18px; /* Increased padding for a larger clickable area */
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: -10px; /* Added margin to separate from input */
+  }
+  
+  .validator-tracking button:hover {
+    background-color: #02448a; /* Darker green on hover */
+  }
+  
+  .validator-tracking .validator-info {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .validator-tracking .error {
+    color: red;
+    margin-top: 20px;
+  }
+  
+  .validator-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .validator-info table,
+  .validator-info th,
+  .validator-info td {
+    border: 1px solid #ddd;
+  }
+  
+  .validator-info th,
+  .validator-info td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .validator-info th {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .validator-info tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .validator-info tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Styling for the attestations section */
+  .attestations {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .attestations h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .attestations table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .attestations th,
+  .attestations td {
+    border: 1px solid #ddd;
+    padding: 10px; /* Adjusted padding for better readability */
+    text-align: left;
+  }
+  
+  .attestations th {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .attestations tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .attestations tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  
+  .attestations .attestations-table-wrapper {
+    max-height: 400px; /* Example height; adjust as needed */
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+  
+  .attestations-button {
+    background-color: #007bff; /* Blue color for button */
+    color: white;
+    border: none;
+    padding: 8px 16px; /* Adjusted padding for button */
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px; /* Added margin to separate from the table */
+  }
+  
+  .attestations-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
