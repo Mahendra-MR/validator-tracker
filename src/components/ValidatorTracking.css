@@ -17,9 +17,9 @@
   }
   
   .validator-tracking label {
-    margin-right: 10px;
+    margin-left: 05px;
   }
-  
+
   .validator-tracking input {
     padding: 8px;
     border: 1px solid #ccc;
@@ -31,10 +31,11 @@
     background-color: #0056b3; /* Changed button color to green */
     color: white;
     border: none;
-    padding: 9px 18px; /* Increased padding for a larger clickable area */
+    padding: 8px 16px; /* Increased padding for a larger clickable area */
     border-radius: 4px;
     cursor: pointer;
-    margin-left: -10px; /* Added margin to separate from input */
+   /* Added margin to separate from input */
+    margin-right: 100px;
   }
   
   .validator-tracking button:hover {

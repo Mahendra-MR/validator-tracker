@@ -23,8 +23,8 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/about" className="sidebar-link">
-            About
+          <Link to="/Help" className="sidebar-link">
+            Help
           </Link>
         </li>
       </ul>
@@ -33,9 +33,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-
-
-
-
-

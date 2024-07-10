@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ValidatorTracking.css';
 
 const ValidatorTracking = () => {
@@ -28,6 +28,7 @@ const ValidatorTracking = () => {
   const fetchValidatorData = useCallback(async (index) => {
     setLoading(true);
     setError(null);
+    setAttestationsError(null);
 
     try {
       const validatorResponse = await axios.get(`https://beaconcha.in/api/v1/validator/${index}`);
@@ -36,24 +37,23 @@ const ValidatorTracking = () => {
       if (validatorResponse.status === 200 && validatorResponse.data && validatorResponse.data.data) {
         setValidatorData(validatorResponse.data.data);
       } else {
-        setError('Validator data not found or not in the expected format.');
+        setError('Validator data not found or not in the expected format. Please try again later or ');
       }
 
       if (attestationsResponse.status === 200 && attestationsResponse.data && attestationsResponse.data.data) {
         const formattedAttestations = attestationsResponse.data.data.map(formatAttestationData);
         setAttestationsData(formattedAttestations);
-        setAttestationsError(null); // Clear previous attestation error if data is available
       } else {
-        setAttestationsData([]); // Reset attestations data to empty array
-        setAttestationsError('No attestations found for this validator.'); // Set error message
+        setAttestationsData([]);
+        setAttestationsError('No attestations found for this validator.');
       }
     } catch (err) {
       console.error('Error fetching data:', err);
-      setError('Failed to fetch data. Please try again later.');
+      setError('Failed to fetch data. Please try again later or ');
     } finally {
       setLoading(false);
     }
-  }, [formatAttestationData]); // Include formatAttestationData in dependencies
+  }, [formatAttestationData]);
 
   useEffect(() => {
     if (paramValidatorIndex) {
@@ -76,7 +76,6 @@ const ValidatorTracking = () => {
 
   const toggleAttestations = () => {
     setShowAttestations(!showAttestations);
-    // Clear attestation error message when hiding attestations
     if (!showAttestations) {
       setAttestationsError(null);
     }
@@ -97,7 +96,8 @@ const ValidatorTracking = () => {
       effectivebalance: 'Effective Balance',
       attestationcount: 'Attestation Count',
       attestationinclusion: 'Attestation Inclusion',
-      graffiti: 'Graffiti'
+      graffiti: 'Graffiti',
+      lasttransactiondate: 'Last Transaction Date'
     };
 
     const orderedFields = [
@@ -114,7 +114,8 @@ const ValidatorTracking = () => {
       'effectivebalance',
       'attestationcount',
       'attestationinclusion',
-      'graffiti'
+      'graffiti',
+      'lasttransactiondate'
     ];
 
     return orderedFields.map(field => {
@@ -138,6 +139,9 @@ const ValidatorTracking = () => {
     if (field === 'slashed') {
       return value ? 'Yes' : 'No';
     }
+    if (field === 'lasttransactiondate') {
+      return new Date(value * 1000).toISOString().replace('T', ' ').replace('Z', ' UTC');
+    }
     return value;
   };
 
@@ -146,15 +150,20 @@ const ValidatorTracking = () => {
       <h2>Ethereum Validator Tracking</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Validator Index: 
-          <input type="text" value={validatorIndex} onChange={handleInputChange} />
+          Validator Index / Public Key: </label>
+          <label>
+          <input type="text" placeholder='Enter a Valid Input' value={validatorIndex} onChange={handleInputChange} />
         </label>
         <button type="submit">Track Validator</button>
       </form>
 
       {loading && <div>Loading...</div>}
-      {error && <div className="error">{error}</div>}
-      {validatorData && (
+      {error && (
+        <div className="error">
+          {error} <Link to="/Help">click here for Help</Link>
+        </div>
+      )}
+      {!loading && validatorData && !error && (
         <div className="validator-info">
           <h3>Validator Information</h3>
           <table>
@@ -165,47 +174,44 @@ const ValidatorTracking = () => {
         </div>
       )}
 
-      {attestationsData.length > 0 && (
+      {!loading && attestationsData.length > 0 && !error && !attestationsError && (
         <div className="attestations">
           <button className="attestations-button" onClick={toggleAttestations}>
             {showAttestations ? 'Hide Attestations' : 'Show Attestations'}
           </button>
-          {attestationsError && <div className="error">{attestationsError}</div>}
-          {showAttestations && !attestationsError && (
-            <>
-              <div className="attestations-table-wrapper">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Epoch</th>
-                      <th>Slot</th>
-                      <th>Committee Index</th>
-                      <th>Inclusion Slot</th>
-                      <th>Status</th>
-                      <th>Week</th>
-                      <th>Week Start</th>
-                      <th>Week End</th>
+          {showAttestations && (
+            <div className="attestations-table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Epoch</th>
+                    <th>Slot</th>
+                    <th>Committee Index</th>
+                    <th>Inclusion Slot</th>
+                    <th>Status</th>
+                    <th>Week</th>
+                    <th>Week Start</th>
+                    <th>Week End</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {attestationsData.map((attestation, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{attestation.epoch || 'N/A'}</td>
+                      <td>{attestation.slot || 'N/A'}</td>
+                      <td>{attestation.committeeIndex}</td>
+                      <td>{attestation.inclusionslot}</td>
+                      <td>{attestation.status}</td>
+                      <td>{attestation.week}</td>
+                      <td>{attestation.week_start}</td>
+                      <td>{attestation.week_end}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {attestationsData.map((attestation, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{attestation.epoch || 'N/A'}</td>
-                        <td>{attestation.slot || 'N/A'}</td>
-                        <td>{attestation.committeeIndex}</td>
-                        <td>{attestation.inclusionslot}</td>
-                        <td>{attestation.status}</td>
-                        <td>{attestation.week}</td>
-                        <td>{attestation.week_start}</td>
-                        <td>{attestation.week_end}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}

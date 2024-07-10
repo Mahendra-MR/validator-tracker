@@ -1,11 +1,10 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ValidatorTracking from './components/ValidatorTracking';
 import Home from './components/Home';
-import About from './components/About';
+import Help from './components/Help';
 import TopValidators from './components/TopValidators';
 import LoadingSpiral from './components/LoadingSpiral';
 import './App.css';
@@ -36,7 +35,7 @@ const App = () => {
               <Route path="/track-validator" element={<ValidatorTracking />} />
               <Route path="/track-validator/:validatorIndex" element={<ValidatorTracking />} />
               <Route path="/top-validators" element={<TopValidators />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/Help" element={<Help />} />
             </Routes>
           </main>
         </div>
@@ -46,13 +45,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
