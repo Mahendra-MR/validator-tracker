@@ -36,20 +36,34 @@ const ValidatorTracking = () => {
 
       if (validatorResponse.status === 200 && validatorResponse.data && validatorResponse.data.data) {
         setValidatorData(validatorResponse.data.data);
+        setError(null); // Clear any previous error
       } else {
-        setError('Validator data not found or not in the expected format. Please try again later or ');
+        setError('No data found for the provided validator index. Please check the index and try again.');
+        setValidatorData(null);
+        setAttestationsData([]);
+        setAttestationsError(null); // Clear attestation error as well
+        setLoading(false);
+        return; // Exit function early on validator data error
       }
 
       if (attestationsResponse.status === 200 && attestationsResponse.data && attestationsResponse.data.data) {
         const formattedAttestations = attestationsResponse.data.data.map(formatAttestationData);
         setAttestationsData(formattedAttestations);
+        if (formattedAttestations.length === 0) {
+          setAttestationsError('No Attestation table available for entered validator index.');
+        } else {
+          setAttestationsError(null); // Clear any previous attestations error
+        }
       } else {
         setAttestationsData([]);
-        setAttestationsError('No attestations found for this validator.');
+        setAttestationsError('No Attestation table available for entered validator index.');
       }
     } catch (err) {
       console.error('Error fetching data:', err);
-      setError('Failed to fetch data. Please try again later or ');
+      setError('Failed to fetch data. Please try again later.');
+      setValidatorData(null);
+      setAttestationsData([]);
+      setAttestationsError(null); // Clear any previous attestation error
     } finally {
       setLoading(false);
     }
@@ -63,6 +77,7 @@ const ValidatorTracking = () => {
 
   const handleInputChange = (e) => {
     setValidatorIndex(e.target.value);
+    setError(null); // Clear error when input changes
   };
 
   const handleSubmit = (e) => {
@@ -76,9 +91,6 @@ const ValidatorTracking = () => {
 
   const toggleAttestations = () => {
     setShowAttestations(!showAttestations);
-    if (!showAttestations) {
-      setAttestationsError(null);
-    }
   };
 
   const renderRows = (data) => {
@@ -118,7 +130,7 @@ const ValidatorTracking = () => {
       'lasttransactiondate'
     ];
 
-    return orderedFields.map(field => {
+    const rows = orderedFields.map(field => {
       const value = data[field];
       if (value !== '' && value !== null && value !== undefined) {
         return (
@@ -130,6 +142,8 @@ const ValidatorTracking = () => {
       }
       return null;
     });
+
+    return rows.filter(row => row !== null);
   };
 
   const formatValue = (field, value) => {
@@ -158,23 +172,41 @@ const ValidatorTracking = () => {
       </form>
 
       {loading && <div>Loading...</div>}
-      {error && (
+      {error && !loading && (
         <div className="error">
-          {error} <Link to="/Help">click here for Help</Link>
+          {error} <Link to="/Help">Click here for Help</Link>
         </div>
       )}
+      {/* {!loading && !validatorData && !error && (
+        <div className="reference">
+          Enter the correct validator index number or public key. If you have any doubts, refer to the help page for a better understanding of what they are.
+        </div>
+      )} */}
       {!loading && validatorData && !error && (
         <div className="validator-info">
-          <h3>Validator Information</h3>
-          <table>
-            <tbody>
-              {renderRows(validatorData)}
-            </tbody>
-          </table>
+          {renderRows(validatorData).length > 0 ? (
+            <>
+              <h3>Validator Information</h3>
+              <table>
+                <tbody>
+                  {renderRows(validatorData)}
+                </tbody>
+              </table>
+              {!attestationsError && attestationsData.length === 0 && (
+                <div className="error">
+                  No Attestation table available for entered validator index.
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="error">
+               No data found for the provided validator index. Please check the index and try again.
+            </div>
+          )}
         </div>
       )}
 
-      {!loading && attestationsData.length > 0 && !error && !attestationsError && (
+      {!loading && attestationsData.length > 0 && !attestationsError && (
         <div className="attestations">
           <button className="attestations-button" onClick={toggleAttestations}>
             {showAttestations ? 'Hide Attestations' : 'Show Attestations'}
@@ -213,6 +245,12 @@ const ValidatorTracking = () => {
               </table>
             </div>
           )}
+        </div>
+      )}
+
+      {!loading && attestationsError && !error && renderRows(validatorData).length > 0 && (
+        <div className="error">
+          {attestationsError}
         </div>
       )}
     </div>

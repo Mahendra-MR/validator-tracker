@@ -51,6 +51,10 @@
     color: red;
     margin-top: 20px;
   }
+  .validator-tracking .reference{
+    text-decoration: dashed;
+    color: #4caf50;
+  } 
   
   .validator-info table {
     width: 100%;
