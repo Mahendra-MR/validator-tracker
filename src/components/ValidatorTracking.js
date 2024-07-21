@@ -177,11 +177,6 @@ const ValidatorTracking = () => {
           {error} <Link to="/Help">Click here for Help</Link>
         </div>
       )}
-      {/* {!loading && !validatorData && !error && (
-        <div className="reference">
-          Enter the correct validator index number or public key. If you have any doubts, refer to the help page for a better understanding of what they are.
-        </div>
-      )} */}
       {!loading && validatorData && !error && (
         <div className="validator-info">
           {renderRows(validatorData).length > 0 ? (
@@ -206,7 +201,7 @@ const ValidatorTracking = () => {
         </div>
       )}
 
-      {!loading && attestationsData.length > 0 && !attestationsError && (
+      {!loading && !error && attestationsData.length > 0 && (
         <div className="attestations">
           <button className="attestations-button" onClick={toggleAttestations}>
             {showAttestations ? 'Hide Attestations' : 'Show Attestations'}
